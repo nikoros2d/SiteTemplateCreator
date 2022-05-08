@@ -15,8 +15,5 @@ jobs:
       - name: Build application
         run: make test
 
-      - name: run app
-        run: ./bin/Qucky
-
       - name: run test
         run: ./bin/tests
