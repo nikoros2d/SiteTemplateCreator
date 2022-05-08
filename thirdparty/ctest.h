@@ -30,13 +30,13 @@ extern "C" {
 #include <stddef.h> /* size_t */
 
 typedef void (*ctest_nullary_run_func)(void);
-typedef void (*ctest_unary_run_func)(void*);
-typedef void (*ctest_setup_func)(void*);
-typedef void (*ctest_teardown_func)(void*);
+typedef void (*ctest_unary_run_func)(void *);
+typedef void (*ctest_setup_func)(void *);
+typedef void (*ctest_teardown_func)(void *);
 
 union ctest_run_func_union {
-    ctest_nullary_run_func nullary;
-    ctest_unary_run_func unary;
+  ctest_nullary_run_func nullary;
+  ctest_unary_run_func unary;
 };
 
 #define CTEST_IMPL_PRAGMA(x) _Pragma (#x)
@@ -62,17 +62,17 @@ union ctest_run_func_union {
 #endif
 
 struct ctest {
-    const char* ssname;  // suite name
-    const char* ttname;  // test name
-    union ctest_run_func_union run;
+  const char *ssname;  // suite name
+  const char *ttname;  // test name
+  union ctest_run_func_union run;
 
-    void* data;
-    ctest_setup_func* setup;
-    ctest_teardown_func* teardown;
+  void *data;
+  ctest_setup_func *setup;
+  ctest_teardown_func *teardown;
 
-    int skip;
+  int skip;
 
-    unsigned int magic;
+  unsigned int magic;
 };
 
 #define CTEST_IMPL_NAME(name) ctest_##name
@@ -163,8 +163,8 @@ struct ctest {
 
 #endif
 
-void CTEST_LOG(const char* fmt, ...) CTEST_IMPL_FORMAT_PRINTF(1, 2);
-void CTEST_ERR(const char* fmt, ...) CTEST_IMPL_FORMAT_PRINTF(1, 2);  // doesn't return
+void CTEST_LOG(const char *fmt, ...) CTEST_IMPL_FORMAT_PRINTF(1, 2);
+void CTEST_ERR(const char *fmt, ...) CTEST_IMPL_FORMAT_PRINTF(1, 2);  // doesn't return
 
 #define CTEST(sname, tname) CTEST_IMPL_CTEST(sname, tname, 0)
 #define CTEST_SKIP(sname, tname) CTEST_IMPL_CTEST(sname, tname, 1)
@@ -172,54 +172,53 @@ void CTEST_ERR(const char* fmt, ...) CTEST_IMPL_FORMAT_PRINTF(1, 2);  // doesn't
 #define CTEST2(sname, tname) CTEST_IMPL_CTEST2(sname, tname, 0)
 #define CTEST2_SKIP(sname, tname) CTEST_IMPL_CTEST2(sname, tname, 1)
 
-
-void assert_str(const char* exp, const char* real, const char* caller, int line);
+void assert_str(const char *exp, const char *real, const char *caller, int line);
 #define ASSERT_STR(exp, real) assert_str(exp, real, __FILE__, __LINE__)
 
-void assert_wstr(const wchar_t *exp, const wchar_t *real, const char* caller, int line);
+void assert_wstr(const wchar_t *exp, const wchar_t *real, const char *caller, int line);
 #define ASSERT_WSTR(exp, real) assert_wstr(exp, real, __FILE__, __LINE__)
 
-void assert_data(const unsigned char* exp, size_t expsize,
-                 const unsigned char* real, size_t realsize,
-                 const char* caller, int line);
+void assert_data(const unsigned char *exp, size_t expsize,
+                 const unsigned char *real, size_t realsize,
+                 const char *caller, int line);
 #define ASSERT_DATA(exp, expsize, real, realsize) \
     assert_data(exp, expsize, real, realsize, __FILE__, __LINE__)
 
-void assert_equal(intmax_t exp, intmax_t real, const char* caller, int line);
+void assert_equal(intmax_t exp, intmax_t real, const char *caller, int line);
 #define ASSERT_EQUAL(exp, real) assert_equal(exp, real, __FILE__, __LINE__)
 
-void assert_equal_u(uintmax_t exp, uintmax_t real, const char* caller, int line);
+void assert_equal_u(uintmax_t exp, uintmax_t real, const char *caller, int line);
 #define ASSERT_EQUAL_U(exp, real) assert_equal_u(exp, real, __FILE__, __LINE__)
 
-void assert_not_equal(intmax_t exp, intmax_t real, const char* caller, int line);
+void assert_not_equal(intmax_t exp, intmax_t real, const char *caller, int line);
 #define ASSERT_NOT_EQUAL(exp, real) assert_not_equal(exp, real, __FILE__, __LINE__)
 
-void assert_not_equal_u(uintmax_t exp, uintmax_t real, const char* caller, int line);
+void assert_not_equal_u(uintmax_t exp, uintmax_t real, const char *caller, int line);
 #define ASSERT_NOT_EQUAL_U(exp, real) assert_not_equal_u(exp, real, __FILE__, __LINE__)
 
-void assert_interval(intmax_t exp1, intmax_t exp2, intmax_t real, const char* caller, int line);
+void assert_interval(intmax_t exp1, intmax_t exp2, intmax_t real, const char *caller, int line);
 #define ASSERT_INTERVAL(exp1, exp2, real) assert_interval(exp1, exp2, real, __FILE__, __LINE__)
 
-void assert_null(void* real, const char* caller, int line);
+void assert_null(void *real, const char *caller, int line);
 #define ASSERT_NULL(real) assert_null((void*)real, __FILE__, __LINE__)
 
-void assert_not_null(const void* real, const char* caller, int line);
+void assert_not_null(const void *real, const char *caller, int line);
 #define ASSERT_NOT_NULL(real) assert_not_null(real, __FILE__, __LINE__)
 
-void assert_true(int real, const char* caller, int line);
+void assert_true(int real, const char *caller, int line);
 #define ASSERT_TRUE(real) assert_true(real, __FILE__, __LINE__)
 
-void assert_false(int real, const char* caller, int line);
+void assert_false(int real, const char *caller, int line);
 #define ASSERT_FALSE(real) assert_false(real, __FILE__, __LINE__)
 
-void assert_fail(const char* caller, int line);
+void assert_fail(const char *caller, int line);
 #define ASSERT_FAIL() assert_fail(__FILE__, __LINE__)
 
-void assert_dbl_near(double exp, double real, double tol, const char* caller, int line);
+void assert_dbl_near(double exp, double real, double tol, const char *caller, int line);
 #define ASSERT_DBL_NEAR(exp, real) assert_dbl_near(exp, real, 1e-4, __FILE__, __LINE__)
 #define ASSERT_DBL_NEAR_TOL(exp, real, tol) assert_dbl_near(exp, real, tol, __FILE__, __LINE__)
 
-void assert_dbl_far(double exp, double real, double tol, const char* caller, int line);
+void assert_dbl_far(double exp, double real, double tol, const char *caller, int line);
 #define ASSERT_DBL_FAR(exp, real) assert_dbl_far(exp, real, 1e-4, __FILE__, __LINE__)
 #define ASSERT_DBL_FAR_TOL(exp, real, tol) assert_dbl_far(exp, real, tol, __FILE__, __LINE__)
 
@@ -587,4 +586,3 @@ __attribute__((no_sanitize_address)) int ctest_main(int argc, const char *argv[]
 #endif
 
 #endif
-
