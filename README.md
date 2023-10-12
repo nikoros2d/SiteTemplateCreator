@@ -1,2 +1,1 @@
-# Quck
-Quck(test)
+# SiteTemplateCreator
